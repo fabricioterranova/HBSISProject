@@ -5,13 +5,12 @@ import android.os.Parcelable;
 
 import com.google.gson.annotations.SerializedName;
 
-import java.util.Date;
-import java.util.Map;
-
 /**
  * Created by fabriciooliveira on 1/22/16.
  */
 public class Pessoa implements Parcelable {
+
+    private int id;
 
     @SerializedName("nome")
     private String nome;
@@ -22,7 +21,7 @@ public class Pessoa implements Parcelable {
     @SerializedName("dataNascimento")
     private String dataNascimento;
 
-    private boolean isAtivo;
+    private int ativo;
 
     public Pessoa() {
 
@@ -34,17 +33,28 @@ public class Pessoa implements Parcelable {
         this.dataNascimento = dataNascimento;
     }
 
-    public Pessoa(String nome, String sobrenome, String dataNascimento, boolean isAtivo) {
+    public Pessoa(int id, String nome, String sobrenome, String dataNascimento, int ativo) {
+        this.id = id;
         this.nome = nome;
         this.sobrenome = sobrenome;
         this.dataNascimento = dataNascimento;
-        this.isAtivo = isAtivo;
+        this.ativo = ativo;
     }
 
     public Pessoa(Parcel input) {
+        this.id = input.readInt();
         this.nome = input.readString();
         this.sobrenome = input.readString();
         this.dataNascimento = input.readString();
+        this.ativo = input.readInt();
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getNome() {
@@ -71,14 +81,13 @@ public class Pessoa implements Parcelable {
         this.dataNascimento = dataNascimento;
     }
 
-    public boolean isAtivo() {
-        return isAtivo;
+    public int getAtivo() {
+        return ativo;
     }
 
-    public void setIsAtivo(boolean isAtivo) {
-        this.isAtivo = isAtivo;
+    public void setAtivo(int ativo) {
+        this.ativo = ativo;
     }
-
 
     @Override
     public int describeContents() {
@@ -87,9 +96,11 @@ public class Pessoa implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(this.id);
         dest.writeString(this.nome);
         dest.writeString(this.sobrenome);
         dest.writeString(this.dataNascimento);
+        dest.writeInt(this.ativo);
     }
 
     public static final Creator<Pessoa> CREATOR = new Creator<Pessoa>() {

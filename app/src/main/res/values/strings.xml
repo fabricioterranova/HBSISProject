@@ -8,5 +8,15 @@
     <string name="menu_backup">Backup</string>
     <string name="menu_sair">Sair</string>
     <string name="msg_encerrando">Encerrando App</string>
+    <string name="botao_salvar">Salvar</string>
+
+    <string name="sair">Sair</string>
+    <string name="deseja_sair">Deseja sair?</string>
+    <string name="sim">Sim</string>
+    <string name="nao">Não</string>
+
+    <string name="inativo">Inativo</string>
+    <string name="ativo">Ativo</string>
+
 
 </resources>

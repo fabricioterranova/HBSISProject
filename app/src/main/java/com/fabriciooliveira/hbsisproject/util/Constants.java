@@ -13,5 +13,11 @@ public class Constants {
 
     public static final String PERSON_STATE = "person_state";
 
+    public static final String PERSON_LIST = "person_list";
+
+    public static final String PERSON = "person";
+
+
+
 
 }

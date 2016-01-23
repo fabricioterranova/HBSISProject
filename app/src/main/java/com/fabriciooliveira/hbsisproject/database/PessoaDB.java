@@ -25,8 +25,10 @@ public class PessoaDB extends SQLiteOpenHelper {
         StringBuilder query = new StringBuilder();
         query.append("CREATE TABLE IF NOT EXISTS TB_PESSOA ( ");
         query.append("ID INTEGER PRIMARY KEY AUTOINCREMENT, ");
-        query.append("NONE TEXT(50) NOT NULL, ");
-        query.append("DATA_NASCIMENTO INTEGER(4) NOT NULL)");
+        query.append("NOME TEXT(50) NOT NULL, ");
+        query.append("SOBRENOME TEXT(50) NOT NULL, ");
+        query.append("DATA_NASCIMENTO TEXT(50), ");
+        query.append("ATIVO INTEGER(1) )");
 
         db.execSQL(query.toString());
     }
@@ -36,26 +38,35 @@ public class PessoaDB extends SQLiteOpenHelper {
         onCreate(db);
     }
 
-    public void insertPessoa(Pessoa pessoa){
+
+    public void inserirListaDePessoas(ArrayList<Pessoa> listaDePessoas){
         SQLiteDatabase db = getWritableDatabase();
 
         ContentValues values = new ContentValues();
-        values.put("NOME", pessoa.getNome());
-        values.put("DATA_NASCIMENTO", pessoa.getDataNascimento().toString());
+        for (int i = 0; i <listaDePessoas.size(); i++) {
+            Pessoa pessoa = listaDePessoas.get(i);
 
-        db.insert("TB_PESSOA", null, values);
+            values.put("NOME", pessoa.getNome());
+            values.put("SOBRENOME", pessoa.getSobrenome());
+            values.put("DATA_NASCIMENTO", pessoa.getDataNascimento());
+            values.put("ATIVO", pessoa.getAtivo());
 
+            db.insert("TB_PESSOA", null, values);
+        }
     }
 
-    public ArrayList<Pessoa> getPessoaList(){
+    public ArrayList<Pessoa> recuperarListaDePessoas(){
         ArrayList<Pessoa> pessoaList = new ArrayList<Pessoa>();
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.query(true, "TB_PESSOA", null, null, null, null, null, "ID", null, null);
 
         while(cursor.moveToNext()){
             Pessoa pessoa = new Pessoa();
+
             pessoa.setNome(cursor.getString(1));
-            //pessoa.setDataNascimento(cursor.getString(2).toString());
+            pessoa.setSobrenome(cursor.getString(2));
+            pessoa.setDataNascimento(cursor.getString(3));
+            pessoa.setAtivo(cursor.getInt(4));
 
             pessoaList.add(pessoa);
         }
@@ -63,26 +74,16 @@ public class PessoaDB extends SQLiteOpenHelper {
         return pessoaList;
     }
 
-//    public List<CardTransaction> getCardTransactionList(){
-//        List<CardTransaction> cardTransactionList = new ArrayList<CardTransaction>();
-//        SQLiteDatabase db = this.getReadableDatabase();
-//        Cursor cursor = db.query(true, "TB_TRANSACTION", null, null, null, null, null, "ID", null, null);
-//
-//        while(cursor.moveToNext()){
-//            CardTransaction cardTransaction = new CardTransaction();
-//            cardTransaction.setOwner(cursor.getString(1));
-//            cardTransaction.setCardNumber(cursor.getString(2));
-//            cardTransaction.setExpirationYear(cursor.getString(2));
-//            cardTransaction.setExpirationMonth(cursor.getString(3));
-//            cardTransaction.setCardFlag(cursor.getString(4));
-//            cardTransaction.setcVV(cursor.getString(5));
-//            cardTransaction.setTotal(cursor.getInt(6));
-//
-//            cardTransactionList.add(cardTransaction);
-//        }
-//
-//        return cardTransactionList;
-//    }
+    public void atualizarPessoaPorID(Pessoa pessoa){
+        SQLiteDatabase db = getWritableDatabase();
 
+        ContentValues values = new ContentValues();
+        values.put("NOME", pessoa.getNome());
+        values.put("SOBRENOME", pessoa.getSobrenome());
+        values.put("DATA_NASCIMENTO", pessoa.getDataNascimento());
+        values.put("ATIVO", pessoa.getAtivo());
+
+        db.update("TB_PESSOA", values, "ID=?", new String[]{String.valueOf(pessoa.getId())});
+    }
 
 }
