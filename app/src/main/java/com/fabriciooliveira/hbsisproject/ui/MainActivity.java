@@ -11,6 +11,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.text.format.DateUtils;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -30,6 +31,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.nio.channels.FileChannel;
 import java.util.ArrayList;
+import java.util.Date;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -130,8 +132,10 @@ public class MainActivity extends AppCompatActivity {
 
     public void copiarDatabaseParaPastaDownload() throws IOException {
         try {
-            File backupDB = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS), Constants.DB_NAME); // for example "my_data_backup.db"
-            File currentDB = getApplicationContext().getDatabasePath(Constants.DB_NAME); //databaseName=your current application database name, for example "my_data.db"
+            StringBuilder builder = new StringBuilder();
+            builder.append("backup_avaliacao_").append(String.valueOf(new Date())).append(".bkp");
+            File backupDB = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS), builder.toString()); 
+            File currentDB = getApplicationContext().getDatabasePath(Constants.DB_NAME);
             if (currentDB.exists()) {
                 FileInputStream fis = new FileInputStream(currentDB);
                 FileOutputStream fos = new FileOutputStream(backupDB);
