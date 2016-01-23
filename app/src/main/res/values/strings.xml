@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">HBSISProject</string>
+    <string name="pessoa_nome">Nome: </string>
+    <string name="pessoa_nascimento">Nasc: </string>
+
+
+    <!-- Menu Na MainActivity -->
+    <string name="menu_backup">Backup</string>
+    <string name="menu_sair">Sair</string>
+    <string name="msg_encerrando">Encerrando App</string>
+
+</resources>
