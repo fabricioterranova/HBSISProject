@@ -23,9 +23,7 @@ public class Pessoa implements Parcelable {
 
     private int ativo;
 
-    public Pessoa() {
-
-    }
+    public Pessoa() { }
 
     public Pessoa(String nome, String sobrenome, String dataNascimento) {
         this.nome = nome;
